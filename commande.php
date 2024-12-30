@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Page SignUp</title>
+    <title>Commande</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
@@ -24,21 +24,6 @@
             color: #dc3545;
             /* Rouge pour supprimer */
         }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                /* Sidebar prend toute la largeur sur petits écrans */
-                height: auto;
-                position: relative;
-                /* Devient non-fixe */
-            }
-
-            .content {
-                margin-left: 0;
-                /* Supprime le décalage sur petits écrans */
-            }
-        }
     </style>
 </head>
 
@@ -51,15 +36,15 @@
             <?php include "sidebar.php"; ?>
             <div class="col py-3 mt-5 pt-5">
                 <!-- Zone centrale -->
-                <h1 class="text-center mb-4">La liste des clients</h1>
+                <h1 class="text-center mb-4">La liste des Commande</h1>
                 <div>
-                    <a href="ajouterClient.php" class="btn btn-success mb-3">
+                    <a href="ajouterCommandes.php" class="btn btn-success mb-3">
                         <!-- Icône SVG -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add me-2" viewBox="0 0 16 16">
                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                             <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
                         </svg>
-                        Ajouter un client
+                        Ajouter un Commande
                     </a>
                 </div>
 
@@ -67,11 +52,12 @@
                 <table class="table table-hover table-bordered text-center">
                     <thead class="table-success">
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">Adresse</th>
-                            <th scope="col">Ville</th>
+                            <th scope="col">Id Commande</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Id Produit</th>
+                            <th scope="col">Id Client</th>
+                            <th scope="col">Id Membre</th>
+                            <th scope="col">Quantite</th>
                             <th scope="col">Modifier</th>
                             <th scope="col">Supprimer</th>
                         </tr>
@@ -79,18 +65,19 @@
                     <tbody>
                         <?php
                         include_once "conn.php";
-                        $req = mysqli_query($conn, "SELECT * FROM client");
+                        $req = mysqli_query($conn, "SELECT * FROM commande");
                         if (mysqli_num_rows($req) == 0) {
                             echo "<tr><td colspan='7'>Il n'y a pas encore de client ajouté !</td></tr>";
                         } else {
                             while ($row = mysqli_fetch_assoc($req)) {
                         ?>
                                 <tr>
+                                    <td><?= $row['idCmd'] ?></td>
+                                    <td><?= $row['dateCmd'] ?></td>
+                                    <td><?= $row['idProduit'] ?></td>
                                     <td><?= $row['idClient'] ?></td>
-                                    <td><?= $row['nom'] ?></td>
-                                    <td><?= $row['prenom'] ?></td>
-                                    <td><?= $row['adresse'] ?></td>
-                                    <td><?= $row['villeResidence'] ?></td>
+                                    <td><?= $row['idMembre'] ?></td>
+                                    <td><?= $row['quantite'] ?></td>
                                     <td>
                                         <a href="#" class="icon-edit">
                                             <!-- Icône modifier -->
@@ -100,7 +87,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="deleteCliens.php" class="icon-delete">
+                                        <a href="#" class="icon-delete">
                                             <!-- Icône supprimer -->
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                                 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66z" />
